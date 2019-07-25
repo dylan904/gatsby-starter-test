@@ -36,23 +36,23 @@ class Header extends React.Component {
     console.log("constructedd")
     super(props)
     this.state = {
-      isDT: window.innerWidth >= 992,
+      isDT: (typeof window !== 'undefined') ? window.innerWidth >= 992 : false,
       showMenuDT: false,
       showMenuMob: false,
-      pagePath: window.location.pathname,
+      pagePath: (typeof window !== 'undefined') ? window.location.pathname : "/",
     }
     this.toggleNavMob = this.toggleNavMob.bind(this)
   }
 
   componentWillUnount() {
     console.log("will unmount")
-    window.onscroll = null
+    typeof window !== 'undefined' && window.onscroll = null
   }
 
   componentDidMount() {
     console.log("mounted")
-    window.onscroll = () => this.handleScroll()
-    window.onresize = () => this.handleResize()
+    typeof window !== 'undefined' && window.onscroll = () => this.handleScroll()
+    typeof window !== 'undefined' && window.onresize = () => this.handleResize()
 
     /*this.setState({
       pagePath: window.location.pathname,
@@ -61,7 +61,7 @@ class Header extends React.Component {
 
   handleResize() {
     let isDT = this.state.isDT,
-      winWidth = window.innerWidth
+      winWidth = (typeof window !== 'undefined') ? window.innerWidth : 0
 
     if ((!isDT && winWidth >= 992) || (isDT && winWidth < 992)) {
       this.setState({
@@ -72,7 +72,7 @@ class Header extends React.Component {
 
   handleScroll() {
     let showMenuDT = this.state.showMenuDT,
-      scrollY = window.scrollY
+      scrollY = (typeof window !== 'undefined') ? window.scrollY : 0
 
     if ((!showMenuDT && scrollY > 100) || (showMenuDT && scrollY < 100)) {
       console.log("scroll", this.state)
@@ -90,7 +90,7 @@ class Header extends React.Component {
   }
 
   mapNavDT(pageData) {
-    console.log("DT", window.location.pathname)
+    console.log("DT", (typeof window !== 'undefined') ? window.location.pathname : "NO WINDOW")
     return pageData.map((page, i) => {
       if (page.more)
         return (
@@ -98,7 +98,7 @@ class Header extends React.Component {
             key={i}
             className={
               "has-children " +
-              ("/" + page.link === window.location.pathname ? "active" : "")
+              ((typeof window !== 'undefined') && "/" + page.link === window.location.pathname) ? "active" : ""
             }
           >
             <Link to={`/${page.link}`}>{page.title}</Link>
@@ -110,7 +110,7 @@ class Header extends React.Component {
           <li
             key={i}
             className={
-              "/" + page.link === window.location.pathname ? "active" : ""
+              ((typeof window !== 'undefined') && "/" + page.link === window.location.pathname) ? "active" : ""
             }
           >
             <Link to={`/${page.link}`}>{page.title}</Link>
@@ -121,7 +121,7 @@ class Header extends React.Component {
   }
 
   mapNavMob(pageData) {
-    console.log("Mob", window.location.pathname)
+    console.log("Mob", , (typeof window !== 'undefined') ? window.location.pathname : "NO WINDOW")
     return pageData.map((page, i) => {
       if (page.more)
         return (
@@ -129,7 +129,7 @@ class Header extends React.Component {
             key={i}
             className={
               "has-children " +
-              ("/" + page.link === window.location.pathname ? "active" : "")
+              ((typeof window !== 'undefined') && "/" + page.link === window.location.pathname) ? "active" : ""
             }
           >
             <span className="arrow-collapse collapsed" data-toggle="collapse" />
@@ -142,7 +142,7 @@ class Header extends React.Component {
           <li
             key={i}
             className={
-              "/" + page.link === window.location.pathname ? "active" : ""
+              ((typeof window !== 'undefined') && "/" + page.link === window.location.pathname) ? "active" : ""
             }
           >
             <Link to={`/${page.link}`}>{page.title}</Link>
@@ -193,7 +193,7 @@ class Header extends React.Component {
                 <div className="container">
                   <div className="site-menu-wrap d-lg-none">
                     <Link
-                      to={`${window.location.pathname}#`}
+                      to={`${ typeof window !== 'undefined' && window.location.pathname }#`}
                       className="site-menu-toggle js-menu-toggle"
                       onClick={this.toggleNavMob}
                     >
