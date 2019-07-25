@@ -125,7 +125,7 @@ class Header extends React.Component {
   }
 
   mapNavMob(pageData) {
-    console.log("Mob", , (typeof window !== 'undefined') ? window.location.pathname : "NO WINDOW")
+    console.log("Mob", (typeof window !== 'undefined') ? window.location.pathname : "NO WINDOW")
     return pageData.map((page, i) => {
       if (page.more)
         return (
