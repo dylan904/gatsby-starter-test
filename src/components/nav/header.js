@@ -46,7 +46,9 @@ class Header extends React.Component {
 
   componentWillUnount() {
     console.log("will unmount")
-    typeof window !== 'undefined' && window.onscroll = null
+    if (typeof window !== 'undefined') {
+      window.onscroll = null
+    }
   }
 
   componentDidMount() {
