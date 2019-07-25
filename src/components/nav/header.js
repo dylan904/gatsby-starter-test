@@ -53,8 +53,10 @@ class Header extends React.Component {
 
   componentDidMount() {
     console.log("mounted")
-    typeof window !== 'undefined' && window.onscroll = () => this.handleScroll()
-    typeof window !== 'undefined' && window.onresize = () => this.handleResize()
+    if (typeof window !== 'undefined') {
+      window.onscroll = () => this.handleScroll()
+      window.onresize = () => this.handleResize()
+    }
 
     /*this.setState({
       pagePath: window.location.pathname,
